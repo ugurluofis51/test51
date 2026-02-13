@@ -24,8 +24,8 @@ export function LoginScreen({ navigation }: Props) {
 
   return (
     <AuthContainer>
-      <Text style={authStyles.title}>Welcome Back 👋</Text>
-      <Text style={authStyles.subtitle}>Sign in to continue</Text>
+      <Text style={authStyles.title}>Sign In</Text>
+      <Text style={authStyles.subtitle}>Welcome back, continue to your account</Text>
 
       <Text style={authStyles.label}>Email</Text>
       <TextInput

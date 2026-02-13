@@ -6,11 +6,9 @@ type LoginPayload = {
 };
 
 type RegisterPayload = {
-  fullName: string;
   email: string;
   phone: string;
   password: string;
-  confirmPassword: string;
 };
 
 export const authApi = {
@@ -22,7 +20,7 @@ export const authApi = {
     return response.data;
   },
   async register(payload: RegisterPayload) {
-    // reqres demo API only requires email/password; other fields stay app-side.
+    // reqres demo API requires email/password; phone stays app-side.
     const response = await api.post('/register', {
       email: payload.email,
       password: payload.password,

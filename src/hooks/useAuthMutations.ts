@@ -19,7 +19,7 @@ export const useRegisterMutation = () => {
   return useMutation({
     mutationFn: authApi.register,
     onSuccess: async (_data, variables) => {
-      await setUser({ email: variables.email, fullName: variables.fullName });
+      await setUser({ email: variables.email });
     },
   });
 };
