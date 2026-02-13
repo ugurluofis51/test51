@@ -11,8 +11,7 @@ import {
 } from 'react-native';
 
 export default function App() {
-  const [mode, setMode] = useState('register');
-  const isLogin = mode === 'login';
+  const [screen, setScreen] = useState('login');
 
   return (
     <SafeAreaView style={styles.safeArea}>
@@ -25,132 +24,130 @@ export default function App() {
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.card}>
-          <View style={styles.switchRow}>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={[styles.switchBtn, isLogin && styles.switchBtnActive]}
-              onPress={() => setMode('login')}
-            >
-              <Text style={[styles.switchText, isLogin && styles.switchTextActive]}>Login</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              style={[styles.switchBtn, !isLogin && styles.switchBtnActive]}
-              onPress={() => setMode('register')}
-            >
-              <Text style={[styles.switchText, !isLogin && styles.switchTextActive]}>Register</Text>
-            </TouchableOpacity>
-          </View>
-
-          {isLogin ? (
-            <>
-              <Text style={styles.title}>Welcome Back 👋</Text>
-              <Text style={styles.subtitle}>Sign in to continue</Text>
-
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                placeholder="you@example.com"
-                placeholderTextColor="#9CA3AF"
-                style={styles.input}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-
-              <Text style={styles.label}>Password</Text>
-              <TextInput
-                placeholder="••••••••"
-                placeholderTextColor="#9CA3AF"
-                style={styles.input}
-                secureTextEntry
-              />
-
-              <TouchableOpacity activeOpacity={0.85} style={styles.forgotWrap}>
-                <Text style={styles.forgotText}>Forgot password?</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity activeOpacity={0.9} style={styles.primaryBtn}>
-                <Text style={styles.primaryBtnText}>Login</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <>
-              <Text style={styles.title}>Create Account ✨</Text>
-              <Text style={styles.subtitle}>Let’s get you started</Text>
-
-              <Text style={styles.label}>Full Name</Text>
-              <TextInput
-                placeholder="John Doe"
-                placeholderTextColor="#9CA3AF"
-                style={styles.input}
-                autoCapitalize="words"
-              />
-
-              <Text style={styles.label}>Email</Text>
-              <TextInput
-                placeholder="you@example.com"
-                placeholderTextColor="#9CA3AF"
-                style={styles.input}
-                keyboardType="email-address"
-                autoCapitalize="none"
-              />
-
-              <Text style={styles.label}>Phone</Text>
-              <TextInput
-                placeholder="+90 5xx xxx xx xx"
-                placeholderTextColor="#9CA3AF"
-                style={styles.input}
-                keyboardType="phone-pad"
-              />
-
-              <Text style={styles.label}>Password</Text>
-              <TextInput
-                placeholder="••••••••"
-                placeholderTextColor="#9CA3AF"
-                style={styles.input}
-                secureTextEntry
-              />
-
-              <Text style={styles.label}>Confirm Password</Text>
-              <TextInput
-                placeholder="••••••••"
-                placeholderTextColor="#9CA3AF"
-                style={styles.input}
-                secureTextEntry
-              />
-
-              <TouchableOpacity activeOpacity={0.9} style={styles.primaryBtn}>
-                <Text style={styles.primaryBtnText}>Create Account</Text>
-              </TouchableOpacity>
-            </>
-          )}
-
-          <View style={styles.dividerRow}>
-            <View style={styles.divider} />
-            <Text style={styles.dividerText}>or continue with</Text>
-            <View style={styles.divider} />
-          </View>
-
-          <View style={styles.socialRow}>
-            <TouchableOpacity style={styles.socialBtn} activeOpacity={0.85}>
-              <Text style={styles.socialText}>Google</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.socialBtn} activeOpacity={0.85}>
-              <Text style={styles.socialText}>Apple</Text>
-            </TouchableOpacity>
-          </View>
-
-          <View style={styles.footerRow}>
-            <Text style={styles.footerText}>
-              {isLogin ? "Don’t have an account?" : 'Already have an account?'}
-            </Text>
-            <TouchableOpacity activeOpacity={0.85} onPress={() => setMode(isLogin ? 'register' : 'login')}>
-              <Text style={styles.signUpText}>{isLogin ? ' Sign up' : ' Login'}</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
+        {screen === 'login' ? (
+          <LoginScreen onGoRegister={() => setScreen('register')} />
+        ) : (
+          <RegisterScreen onGoLogin={() => setScreen('login')} />
+        )}
       </ScrollView>
     </SafeAreaView>
+  );
+}
+
+function LoginScreen({ onGoRegister }) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.title}>Welcome Back 👋</Text>
+      <Text style={styles.subtitle}>Sign in to continue</Text>
+
+      <Text style={styles.label}>Email</Text>
+      <TextInput
+        placeholder="you@example.com"
+        placeholderTextColor="#9CA3AF"
+        style={styles.input}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <Text style={styles.label}>Password</Text>
+      <TextInput
+        placeholder="••••••••"
+        placeholderTextColor="#9CA3AF"
+        style={styles.input}
+        secureTextEntry
+      />
+
+      <TouchableOpacity activeOpacity={0.85} style={styles.forgotWrap}>
+        <Text style={styles.forgotText}>Forgot password?</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity activeOpacity={0.9} style={styles.primaryBtn}>
+        <Text style={styles.primaryBtnText}>Login</Text>
+      </TouchableOpacity>
+
+      <View style={styles.dividerRow}>
+        <View style={styles.divider} />
+        <Text style={styles.dividerText}>or continue with</Text>
+        <View style={styles.divider} />
+      </View>
+
+      <View style={styles.socialRow}>
+        <TouchableOpacity style={styles.socialBtn} activeOpacity={0.85}>
+          <Text style={styles.socialText}>Google</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.socialBtn} activeOpacity={0.85}>
+          <Text style={styles.socialText}>Apple</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.footerRow}>
+        <Text style={styles.footerText}>Don’t have an account?</Text>
+        <TouchableOpacity activeOpacity={0.85} onPress={onGoRegister}>
+          <Text style={styles.linkText}> Sign up</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+function RegisterScreen({ onGoLogin }) {
+  return (
+    <View style={styles.card}>
+      <Text style={styles.title}>Create Account ✨</Text>
+      <Text style={styles.subtitle}>Let’s get you started</Text>
+
+      <Text style={styles.label}>Full Name</Text>
+      <TextInput
+        placeholder="John Doe"
+        placeholderTextColor="#9CA3AF"
+        style={styles.input}
+        autoCapitalize="words"
+      />
+
+      <Text style={styles.label}>Email</Text>
+      <TextInput
+        placeholder="you@example.com"
+        placeholderTextColor="#9CA3AF"
+        style={styles.input}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+
+      <Text style={styles.label}>Phone</Text>
+      <TextInput
+        placeholder="+90 5xx xxx xx xx"
+        placeholderTextColor="#9CA3AF"
+        style={styles.input}
+        keyboardType="phone-pad"
+      />
+
+      <Text style={styles.label}>Password</Text>
+      <TextInput
+        placeholder="••••••••"
+        placeholderTextColor="#9CA3AF"
+        style={styles.input}
+        secureTextEntry
+      />
+
+      <Text style={styles.label}>Confirm Password</Text>
+      <TextInput
+        placeholder="••••••••"
+        placeholderTextColor="#9CA3AF"
+        style={styles.input}
+        secureTextEntry
+      />
+
+      <TouchableOpacity activeOpacity={0.9} style={styles.primaryBtn}>
+        <Text style={styles.primaryBtnText}>Create Account</Text>
+      </TouchableOpacity>
+
+      <View style={styles.footerRow}>
+        <Text style={styles.footerText}>Already have an account?</Text>
+        <TouchableOpacity activeOpacity={0.85} onPress={onGoLogin}>
+          <Text style={styles.linkText}> Login</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
@@ -195,29 +192,6 @@ const styles = StyleSheet.create({
     shadowRadius: 14,
     shadowOffset: { width: 0, height: 6 },
     elevation: 9,
-  },
-  switchRow: {
-    flexDirection: 'row',
-    backgroundColor: '#EEF2FF',
-    borderRadius: 12,
-    padding: 4,
-    marginBottom: 16,
-  },
-  switchBtn: {
-    flex: 1,
-    borderRadius: 9,
-    alignItems: 'center',
-    paddingVertical: 9,
-  },
-  switchBtnActive: {
-    backgroundColor: '#2563EB',
-  },
-  switchText: {
-    color: '#374151',
-    fontWeight: '700',
-  },
-  switchTextActive: {
-    color: '#FFFFFF',
   },
   title: {
     fontSize: 28,
@@ -313,7 +287,7 @@ const styles = StyleSheet.create({
     color: '#6B7280',
     fontSize: 13,
   },
-  signUpText: {
+  linkText: {
     color: '#2563EB',
     fontSize: 13,
     fontWeight: '700',
